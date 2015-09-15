@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>upcom-viz</name>
+  <name>upcom_viz</name>
   <version>0.0.0</version>
-  <description>The upcom-viz package</description>
+  <description>The upcom_viz package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->

@@ -52,4 +52,4 @@ rm -rf $BUILDBIN/main.dart.deps
 
 # Copy over tabinfo.json -> build/bin
 cp $TOPDIR/lib/tabinfo.json $BUILDBIN
-cp -r $TOPDIR/upcom-viz $BUILDBIN
+cp -r $TOPDIR/upcom_viz $BUILDBIN
