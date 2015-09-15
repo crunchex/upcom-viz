@@ -22,12 +22,11 @@ class UpDroidViz extends TabController {
   }
 
   // Private instance variables.
-  ScriptElement _script1, _script2;
+  List<ScriptElement> _scripts;
 
   UpDroidViz(List<ScriptElement> scripts) :
   super(UpDroidViz.names, getMenuConfig(), 'tabs/upcom-your-tab/viz.css') {
-    _script1 = scripts[0];
-    _script2 = scripts[1];
+    _scripts = scripts;
 
   }
 
@@ -76,7 +75,6 @@ class UpDroidViz extends TabController {
 
   /// Final clean up method, called right before the [TabController] is destroyed.
   void cleanUp() {
-    _script1.remove();
-    _script2.remove();
+    _scripts.forEach((e) => e.remove());
   }
 }
