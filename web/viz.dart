@@ -33,8 +33,12 @@ class UpDroidViz extends TabController {
   /// Initial [TabController] setup.
   /// This method is called between registerMailbox() and registerEventHandlers().
   void setUpController() {
-    DivElement urdfDiv = new DivElement();
+    DivElement urdfDiv = new DivElement()
+      ..id = '$refName-$id-urdf-div'
+      ..classes.add('$refName-urdf-div');
     view.content.children.add(urdfDiv);
+
+
   }
 
   //\/\/ Mailbox Handlers /\/\//
