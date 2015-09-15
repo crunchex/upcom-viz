@@ -31,7 +31,7 @@ class CmdrViz extends Tab {
     print(Platform.environment['PWD']);
     print(Directory.current.path);
 
-    Process.start('bash', ['-c', '. ${uproot.path}/catkin_ws/devel/setup.bash && roslaunch .launch'], runInShell: true).then((process) {
+    Process.start('bash', ['-c', '. ${uproot.path}/catkin_ws/devel/setup.bash && roslaunch upcom_viz upcom_viz.launch'], runInShell: true).then((process) {
       _shell = process;
       stdout.addStream(process.stdout);
       stderr.addStream(process.stderr);
