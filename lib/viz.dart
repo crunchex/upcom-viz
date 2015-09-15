@@ -23,19 +23,12 @@ class CmdrViz extends Tab {
 
   // Private instance variables.
     Process _shell;
+    Directory _uproot;
 
   CmdrViz(SendPort sp, args) :
   super(CmdrViz.names, sp, args) {
-    Directory uproot = new Directory(args[2]);
-
-    print(Platform.environment['PWD']);
-    print(Directory.current.path);
-
-    Process.start('bash', ['-c', '. ${uproot.path}/catkin_ws/devel/setup.bash && roslaunch upcom_viz upcom_viz.launch'], runInShell: true).then((process) {
-      _shell = process;
-      stdout.addStream(process.stdout);
-      stderr.addStream(process.stderr);
-    });
+    _uproot = new Directory(args[2]);
+    _startRosNodes();
   }
 
   /// Register message handlers as part of the setup routine.
@@ -47,6 +40,22 @@ class CmdrViz extends Tab {
     // cases where there is a lot of data (like a video stream), or when a pre-existing application
     // requires a direct endpoint.
     //  mailbox.registerEndPointHandler('/$refName/$id/websocket_endpoint', _endpointHandler);
+  }
+
+  Future _startRosNodes() {
+    Completer c = new Completer();
+    Process.start('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && roslaunch upcom_viz upcom_viz.launch'], runInShell: true).then((process) {
+      _shell = process;
+      stdout.addStream(process.stdout);
+      stderr.addStream(process.stderr);
+
+      // TODO: replace this timer with a method that checks rosnode list for
+      // the expected nodes.
+      // This timer may need to be fine-tuned depending on the system.
+      sleep(new Duration(seconds: 5));
+      mailbox.send(new Msg('NODES_UP'));
+    });
+    return c.future;
   }
 
   /// Called last, right before the [Tab] is destroyed.
