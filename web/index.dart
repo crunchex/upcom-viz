@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'package:quiver/async.dart';
 import 'viz.dart';
 
 void main() {
@@ -7,7 +8,16 @@ void main() {
     ..src = 'tabs/upcom-viz/viz-deps.js';
   document.body.children.add(depsJs);
 
-  depsJs.onLoad.first.then((_) {
-    new UpDroidViz([depsJs]);
+  ScriptElement vizJs = new ScriptElement()
+    ..type = 'text/javascript'
+    ..src = 'tabs/upcom-viz/viz.js';
+  document.body.children.add(vizJs);
+
+  FutureGroup jsGroup = new FutureGroup();
+  jsGroup.add(depsJs.onLoad.first);
+  jsGroup.add(vizJs.onLoad.first);
+
+  jsGroup.future.then((_) {
+    new UpDroidViz([depsJs, vizJs]);
   });
 }

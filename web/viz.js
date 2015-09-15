@@ -9,9 +9,9 @@ function vizInit() {
 
     // Create the main viewer.
     var viewer = new ROS3D.Viewer({
-        divID : 'urdf',
-        width : 800,
-        height : 600,
+        divID : 'upcom-viz-1-urdf-div',
+        width : 470,
+        height : 647,
         antialias : true
     });
 

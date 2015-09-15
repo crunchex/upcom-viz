@@ -38,7 +38,7 @@ class UpDroidViz extends TabController {
       ..classes.add('$refName-urdf-div');
     view.content.children.add(urdfDiv);
 
-
+    new js.JsObject(js.context['vizInit'], []);
   }
 
   //\/\/ Mailbox Handlers /\/\//
