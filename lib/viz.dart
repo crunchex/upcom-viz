@@ -22,13 +22,20 @@ class CmdrViz extends Tab {
   static final List<String> names = ['upcom-viz', 'UpDroid Visualizer', 'Visualizer'];
 
   // Private instance variables.
-  //  int _x;
-  //  String _y;
+    Process _shell;
 
   CmdrViz(SendPort sp, args) :
   super(CmdrViz.names, sp, args) {
-    // Don't put expensive, time-consuming code here.
-    // Set up a call to an async function, or save more
+    Directory uproot = new Directory(args[2]);
+
+    print(Platform.environment['PWD']);
+    print(Directory.current.path);
+
+    Process.start('bash', ['-c', '. ${uproot.path}/catkin_ws/devel/setup.bash && roslaunch .launch'], runInShell: true).then((process) {
+      _shell = process;
+      stdout.addStream(process.stdout);
+      stderr.addStream(process.stderr);
+    });
   }
 
   /// Register message handlers as part of the setup routine.
@@ -44,6 +51,6 @@ class CmdrViz extends Tab {
 
   /// Called last, right before the [Tab] is destroyed.
   void cleanup() {
-  //  if (_shell != null) _shell.kill();
+    if (_shell != null) _shell.kill();
   }
 }
