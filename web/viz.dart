@@ -37,19 +37,29 @@ class UpDroidViz extends TabController {
       ..id = '$refName-$id-urdf-div'
       ..classes.add('$refName-urdf-div');
     view.content.children.add(urdfDiv);
-
-    new js.JsObject(js.context['vizInit'], []);
   }
 
   //\/\/ Mailbox Handlers /\/\//
 
-  // Add some methods here that are registered with the [Mailbox] below.
+  void _startViz(Msg m) {
+    WebSocket ws;
+    new Timer(new Duration(seconds: 1), () {
+      ws = new WebSocket('ws://localhost:9090');
+      new Timer.periodic(new Duration(seconds: 3), (Timer t) {
+        print('ws state: ${ws.readyState.toString()}, expecting: ${WebSocket.OPEN.toString()}');
 
+        if (ws != null && (ws.readyState == WebSocket.OPEN)) {
+          t.cancel();
+          new js.JsObject(js.context['vizInit'], []);
+        }
+      });
+    });
+  }
 
   /// Register handlers for [Mailbox].
   void registerMailbox() {
     //  mailbox.registerWebSocketEvent(EventType.ON_OPEN, 'TAB_READY', _signalReady);
-    //  mailbox.registerWebSocketEvent(EventType.ON_MESSAGE, 'DO_SOMETHING', _doSomething);
+      mailbox.registerWebSocketEvent(EventType.ON_MESSAGE, 'NODES_UP', _startViz);
   }
 
   //\/\/ Mailbox Handlers /\/\//
