@@ -25,7 +25,7 @@ class UpDroidViz extends TabController {
   List<ScriptElement> _scripts;
 
   UpDroidViz(List<ScriptElement> scripts) :
-  super(UpDroidViz.names, getMenuConfig(), 'tabs/upcom-your-tab/viz.css') {
+  super(UpDroidViz.names, getMenuConfig(), 'tabs/upcom-viz/viz.css') {
     _scripts = scripts;
 
   }
