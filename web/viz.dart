@@ -23,6 +23,7 @@ class UpDroidViz extends TabController {
 
   // Private instance variables.
   List<ScriptElement> _scripts;
+  DivElement _urdfDiv;
 
   UpDroidViz(List<ScriptElement> scripts) :
   super(UpDroidViz.names, getMenuConfig(), 'tabs/upcom-viz/viz.css') {
@@ -33,10 +34,10 @@ class UpDroidViz extends TabController {
   /// Initial [TabController] setup.
   /// This method is called between registerMailbox() and registerEventHandlers().
   void setUpController() {
-    DivElement urdfDiv = new DivElement()
+    _urdfDiv = new DivElement()
       ..id = '$refName-$id-urdf-div'
       ..classes.add('$refName-urdf-div');
-    view.content.children.add(urdfDiv);
+    view.content.children.add(_urdfDiv);
   }
 
   //\/\/ Mailbox Handlers /\/\//
@@ -64,14 +65,17 @@ class UpDroidViz extends TabController {
 
   //\/\/ Mailbox Handlers /\/\//
 
-  // Add some methods here that are called within registerEventHandlers() below.
+  void _resizeContents() {
+    CanvasElement canvas = _urdfDiv.children.first;
+    canvas.classes.add('${refName}-urdf-canvas');
+    canvas.width = _urdfDiv.contentEdge.width;
+    canvas.height = _urdfDiv.contentEdge.height;
+  }
 
 
   /// Create any event handlers for buttons, regular DOM events, etc.
   void registerEventHandlers() {
-    window.onResize.listen((e) {
-    // Maybe call a method to resize the tab's contents.
-    });
+    window.onResize.listen((e) => _resizeContents());
   }
 
   /// Set the [Element] to focus on when the user clicks within the [TabView] area,
