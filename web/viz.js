@@ -1,17 +1,18 @@
-/**
- * Setup all visualization elements when the page is loaded.
- */
-function vizInit() {
+var ros;
+
+function rosConnect() {
     // Connect to ROS.
-    var ros = new ROSLIB.Ros({
+    ros = new ROSLIB.Ros({
         url : 'ws://localhost:9090'
     });
+}
 
+function setUpViewer(canvasWidth, canvasHeight) {
     // Create the main viewer.
     var viewer = new ROS3D.Viewer({
         divID : 'upcom-viz-1-urdf-div',
-        width : 100,
-        height : 100,
+        width : canvasWidth,
+        height : canvasHeight,
         antialias : true
     });
 

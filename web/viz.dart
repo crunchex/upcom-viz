@@ -51,7 +51,8 @@ class UpDroidViz extends TabController {
 
         if (ws != null && (ws.readyState == WebSocket.OPEN)) {
           t.cancel();
-          new js.JsObject(js.context['vizInit'], []);
+          new js.JsObject(js.context['rosConnect'], []);
+          new js.JsObject(js.context['setUpViewer'], [_urdfDiv.contentEdge.width, _urdfDiv.contentEdge.height]);
         }
       });
     });
@@ -67,11 +68,10 @@ class UpDroidViz extends TabController {
 
   void _resizeContents() {
     CanvasElement canvas = _urdfDiv.children.first;
-    canvas.classes.add('${refName}-urdf-canvas');
-    canvas.width = _urdfDiv.contentEdge.width;
-    canvas.height = _urdfDiv.contentEdge.height;
-  }
+    canvas.remove();
 
+    new js.JsObject(js.context['setUpViewer'], [_urdfDiv.contentEdge.width, _urdfDiv.contentEdge.height]);
+  }
 
   /// Create any event handlers for buttons, regular DOM events, etc.
   void registerEventHandlers() {
