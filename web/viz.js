@@ -30,7 +30,7 @@ function vizInit() {
     var urdfClient = new ROS3D.UrdfClient({
         ros : ros,
         tfClient : tfClient,
-        path : 'http://resources.robotwebtools.org/',
+        path : 'http://localhost:12060/tabs/upcom-viz/',
         rootObject : viewer.scene,
         loader : ROS3D.COLLADA_LOADER_2
     });
