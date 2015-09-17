@@ -34,12 +34,33 @@ class CmdrViz extends Tab {
       stdout.addStream(process.stdout);
       stderr.addStream(process.stderr);
 
-      // TODO: replace this timer with a method that checks rosnode list for
-      // the expected nodes.
-      // This timer may need to be fine-tuned depending on the system.
-      sleep(new Duration(seconds: 5));
+      bool nodesUp = false;
+      List nodes = [
+        '/joint_state_publisher',
+        '/robot_state_publisher',
+        '/rosapi',
+        '/rosbridge_websocket',
+        '/rosout',
+        '/tf2_web_republisher'
+      ];
+
+      while (!nodesUp) {
+        ProcessResult result = Process.runSync('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && rosnode list'], runInShell: true);
+        String stdout = result.stdout;
+        for (String node in nodes) {
+          if (!stdout.contains(node)) {
+            nodesUp = false;
+            break;
+          }
+
+          nodesUp = true;
+        }
+      }
+
       mailbox.send(new Msg('NODES_UP'));
+      c.complete();
     });
+
     return c.future;
   }
 
