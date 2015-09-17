@@ -1,6 +1,5 @@
 library web.viz;
 
-// Typical dart built-in imports.
 import 'dart:async';
 import 'dart:html';
 import 'dart:js' as js;
@@ -11,8 +10,6 @@ import 'package:upcom-api/tab_frontend.dart';
 class UpDroidViz extends TabController {
   static final List<String> names = ['upcom-viz', 'UpDroid Visualizer', 'Visualizer'];
 
-  /// This [List] will populate the Tab menu.
-  /// You should probably keep at least File > Close Tab.
   static List getMenuConfig() {
     List menu = [
       {'title': 'File', 'items': [
@@ -31,7 +28,6 @@ class UpDroidViz extends TabController {
 
   }
 
-  /// Initial [TabController] setup.
   /// This method is called between registerMailbox() and registerEventHandlers().
   void setUpController() {
     _urdfDiv = new DivElement()
@@ -70,7 +66,7 @@ class UpDroidViz extends TabController {
       mailbox.registerWebSocketEvent(EventType.ON_MESSAGE, 'NODES_UP', _startViz);
   }
 
-  //\/\/ Mailbox Handlers /\/\//
+  //\/\/ Event Handlers /\/\//
 
   void _resizeContents() {
     CanvasElement canvas = _urdfDiv.children.first;
@@ -84,20 +80,14 @@ class UpDroidViz extends TabController {
     window.onResize.listen((e) => _resizeContents());
   }
 
-  /// Set the [Element] to focus on when the user clicks within the [TabView] area,
-  /// (below the menu).
   Element get elementToFocus => view.content.children[0];
 
-  /// This method can be used to prevent a user from closing this [TabController].
-  /// DO NOT abuse this. It should only interrupt the process if is still stuff
-  /// that needs to be cleaned up. You can also use the [Future] to delay closing.
   Future<bool> preClose() {
     Completer c = new Completer();
     c.complete(true);
     return c.future;
   }
 
-  /// Final clean up method, called right before the [TabController] is destroyed.
   void cleanUp() {
     _scripts.forEach((e) => e.remove());
   }
