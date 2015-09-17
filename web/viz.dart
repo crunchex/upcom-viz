@@ -53,6 +53,12 @@ class UpDroidViz extends TabController {
           t.cancel();
           new js.JsObject(js.context['rosConnect'], []);
           new js.JsObject(js.context['setUpViewer'], [_urdfDiv.contentEdge.width, _urdfDiv.contentEdge.height]);
+
+          // Give the canvas some time to load before we apply the fade-in CSS.
+          new Timer(new Duration(seconds: 2), () {
+            CanvasElement canvas = _urdfDiv.children.first;
+            canvas.classes.add('$refName-urdf-canvas-loaded');
+          });
         }
       });
     });

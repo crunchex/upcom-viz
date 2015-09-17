@@ -13,7 +13,9 @@ function setUpViewer(canvasWidth, canvasHeight) {
         divID : 'upcom-viz-1-urdf-div',
         width : canvasWidth,
         height : canvasHeight,
-        antialias : true
+        background: '#ffffff',
+        antialias : true,
+        cameraPosition : {x:0, y:0, z:6}
     });
 
     // Add a grid.
