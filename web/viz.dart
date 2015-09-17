@@ -48,13 +48,7 @@ class UpDroidViz extends TabController {
         if (ws != null && (ws.readyState == WebSocket.OPEN)) {
           t.cancel();
           new js.JsObject(js.context['rosConnect'], []);
-          new js.JsObject(js.context['setUpViewer'], [_urdfDiv.contentEdge.width, _urdfDiv.contentEdge.height]);
-
-          // Give the canvas some time to load before we apply the fade-in CSS.
-          new Timer(new Duration(seconds: 2), () {
-            CanvasElement canvas = _urdfDiv.children.first;
-            canvas.classes.add('$refName-urdf-canvas-loaded');
-          });
+          _setUpViewer();
         }
       });
     });
@@ -68,16 +62,23 @@ class UpDroidViz extends TabController {
 
   //\/\/ Event Handlers /\/\//
 
-  void _resizeContents() {
-    CanvasElement canvas = _urdfDiv.children.first;
-    canvas.remove();
-
+  void _setUpViewer() {
     new js.JsObject(js.context['setUpViewer'], [_urdfDiv.contentEdge.width, _urdfDiv.contentEdge.height]);
+
+    // Give the canvas some time to load before we apply the fade-in CSS.
+    new Timer(new Duration(seconds: 1), () {
+      CanvasElement canvas = _urdfDiv.children.first;
+      canvas.classes.add('$refName-urdf-canvas-loaded');
+    });
   }
 
   /// Create any event handlers for buttons, regular DOM events, etc.
   void registerEventHandlers() {
-    window.onResize.listen((e) => _resizeContents());
+    window.onResize.listen((e) {
+      CanvasElement canvas = _urdfDiv.children.first;
+      canvas.remove();
+      _setUpViewer();
+    });
   }
 
   Element get elementToFocus => view.content.children[0];
