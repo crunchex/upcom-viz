@@ -1,13 +1,13 @@
 var ros;
 
-function rosConnect() {
+function rosConnect(ip) {
     // Connect to ROS.
     ros = new ROSLIB.Ros({
-        url : 'ws://localhost:9090'
+        url : 'ws://' + ip + ':9090'
     });
 }
 
-function setUpViewer(canvasWidth, canvasHeight) {
+function setUpViewer(ip, canvasWidth, canvasHeight) {
     // Create the main viewer.
     var viewer = new ROS3D.Viewer({
         divID : 'upcom-viz-1-urdf-div',
@@ -33,7 +33,7 @@ function setUpViewer(canvasWidth, canvasHeight) {
     var urdfClient = new ROS3D.UrdfClient({
         ros : ros,
         tfClient : tfClient,
-        path : 'http://localhost:12060/tabs/upcom-viz/',
+        path : 'http://' + ip + ':12060/tabs/upcom-viz/',
         rootObject : viewer.scene,
         loader : ROS3D.COLLADA_LOADER_2
     });

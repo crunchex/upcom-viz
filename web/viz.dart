@@ -40,14 +40,15 @@ class UpDroidViz extends TabController {
 
   void _startViz(Msg m) {
     WebSocket ws;
+    String ip = window.location.host.split(':')[0];
     new Timer(new Duration(seconds: 1), () {
-      ws = new WebSocket('ws://localhost:9090');
+      ws = new WebSocket('ws://$ip:9090');
       new Timer.periodic(new Duration(seconds: 3), (Timer t) {
         print('ws state: ${ws.readyState.toString()}, expecting: ${WebSocket.OPEN.toString()}');
 
         if (ws != null && (ws.readyState == WebSocket.OPEN)) {
           t.cancel();
-          new js.JsObject(js.context['rosConnect'], []);
+          new js.JsObject(js.context['rosConnect'], [ip]);
           _setUpViewer();
         }
       });
@@ -63,7 +64,8 @@ class UpDroidViz extends TabController {
   //\/\/ Event Handlers /\/\//
 
   void _setUpViewer() {
-    new js.JsObject(js.context['setUpViewer'], [_urdfDiv.contentEdge.width, _urdfDiv.contentEdge.height]);
+    String ip = window.location.host.split(':')[0];
+    new js.JsObject(js.context['setUpViewer'], [ip, _urdfDiv.contentEdge.width, _urdfDiv.contentEdge.height]);
 
     // Give the canvas some time to load before we apply the fade-in CSS.
     new Timer(new Duration(seconds: 1), () {
