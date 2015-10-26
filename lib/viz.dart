@@ -29,7 +29,7 @@ class CmdrViz extends Tab {
 
   Future _startRosNodes() {
     Completer c = new Completer();
-    Process.start('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && roslaunch upcom_viz upcom_viz.launch'], runInShell: true).then((process) {
+    Process.start('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && roslaunch upcom_viz upcom_viz.launch manipulator_module:=mono_arm'], runInShell: true).then((process) {
       _shell = process;
       //stdout.addStream(process.stdout);
       //stderr.addStream(process.stderr);
