@@ -29,34 +29,39 @@ class CmdrViz extends Tab {
 
   Future _startRosNodes() {
     Completer c = new Completer();
-    Process.start('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && roslaunch upcom_viz upcom_viz.launch manipulator_module:=mono_arm'], runInShell: true).then((process) {
-      _shell = process;
-      //stdout.addStream(process.stdout);
-      //stderr.addStream(process.stderr);
+//    Process.start('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && roslaunch upcom_viz upcom_viz.launch manipulator_module:=mono_arm'], runInShell: true).then((process) {
+//      _shell = process;
+//      //stdout.addStream(process.stdout);
+//      //stderr.addStream(process.stderr);
+//
+//      bool nodesUp = false;
+//      List nodes = [
+//        '/joint_state_publisher',
+//        '/robot_state_publisher',
+//        '/rosapi',
+//        '/rosbridge_websocket',
+//        '/rosout',
+//        '/tf2_web_republisher'
+//      ];
+//
+//      while (!nodesUp) {
+//        ProcessResult result = Process.runSync('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && rosnode list'], runInShell: true);
+//        String stdout = result.stdout;
+//        for (String node in nodes) {
+//          if (!stdout.contains(node)) {
+//            nodesUp = false;
+//            break;
+//          }
+//
+//          nodesUp = true;
+//        }
+//      }
+//
+//      mailbox.send(new Msg('NODES_UP'));
+//      c.complete();
+//    });
 
-      bool nodesUp = false;
-      List nodes = [
-        '/joint_state_publisher',
-        '/robot_state_publisher',
-        '/rosapi',
-        '/rosbridge_websocket',
-        '/rosout',
-        '/tf2_web_republisher'
-      ];
-
-      while (!nodesUp) {
-        ProcessResult result = Process.runSync('bash', ['-c', '. ${_uproot.path}/catkin_ws/devel/setup.bash && rosnode list'], runInShell: true);
-        String stdout = result.stdout;
-        for (String node in nodes) {
-          if (!stdout.contains(node)) {
-            nodesUp = false;
-            break;
-          }
-
-          nodesUp = true;
-        }
-      }
-
+    Timer t = new Timer(new Duration(seconds: 5), () {
       mailbox.send(new Msg('NODES_UP'));
       c.complete();
     });
