@@ -30,11 +30,12 @@ function setUpViewer(ip, canvasWidth, canvasHeight) {
     });
 
     // Setup the URDF client.
+    // Note: ROS3D.COLLADA_LOADER_2 will load MeshLab-saved .dae files incorrectly.
     var urdfClient = new ROS3D.UrdfClient({
         ros : ros,
         tfClient : tfClient,
         path : 'http://' + ip + ':12060/tabs/upcom-viz/',
         rootObject : viewer.scene,
-        loader : ROS3D.COLLADA_LOADER_2
+        loader : ROS3D.COLLADA_LOADER
     });
 }
