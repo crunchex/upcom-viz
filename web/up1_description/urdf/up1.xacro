@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="up1">
+
+  <!-- This syntax does not appear to work, even in ros-indigo -->
+  <!-- <xacro:arg name="manipulator_module" default="dual_arm" />
+  <xacro:arg name="base_module" default="base" />
+  <xacro:arg name="io_module" default="io" /> -->
+
+  <xacro:include filename="$(find up1_description)/urdf/common.xacro" />
+  <xacro:include filename="$(find up1_description)/urdf/base_module/$(arg base_module)_module.xacro" />
+  <xacro:include filename="$(find up1_description)/urdf/io_module/$(arg io_module)_module.xacro" />
+  <xacro:include filename="$(find up1_description)/urdf/manipulator_module/$(arg manipulator_module)_module/$(arg manipulator_module)_module.xacro" />
+
+  <xacro:base_module />
+  <xacro:io_module />
+  <xacro:manipulator_module />
+
+</robot>

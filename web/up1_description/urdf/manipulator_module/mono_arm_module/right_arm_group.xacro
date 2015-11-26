@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="up1">
+
+  <xacro:include filename="$(find up1_description)/urdf/manipulator_module/mono_arm_module/arm_root_link.xacro" />
+  <xacro:include filename="$(find up1_description)/urdf/manipulator_module/mono_arm_module/arm.xacro" />
+
+  <xacro:macro name="arm_group">
+    <!-- ============================   Right Arm Group   ============================ -->
+    <!-- This xacro group is intended to be the source URDF for an IKFast solver -->
+
+    <xacro:arm_root_link />
+    <xacro:arm prefix="right" reflect="1" />
+
+  </xacro:macro>
+
+</robot>

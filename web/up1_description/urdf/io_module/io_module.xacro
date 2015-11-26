@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="up1">
+
+  <xacro:include filename="$(find up1_description)/urdf/io_module/camera.xacro" />
+  <xacro:include filename="$(find up1_description)/urdf/io_module/io_module.gazebo.xacro" />
+
+  <xacro:macro name="io_module">
+    <!-- ============================   IO Module   ============================ -->
+
+    <!-- IO Joint -->
+    <joint name="base_to_io" type="fixed">
+      <parent link="base_link" />
+      <child link="io_link" />
+      <origin xyz="${io_offset_x} ${io_offset_y} ${io_offset_z}" />
+    </joint>
+    <!-- IO Link -->
+    <link name="io_link">
+      <visual>
+        <geometry>
+          <mesh filename="package://up1_description/meshes/io/io_viz.dae" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="grey" />
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://up1_description/meshes/io/io.dae" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.09799"/>
+        <inertia ixx="0.00036946993" ixy="0.00000010944" ixz="-0.00001523298"
+                 iyy="0.00007193675" iyz="0.00000030515" izz="0.00034948153"/>
+      </inertial>
+    </link>
+
+    <xacro:io_module_gazebo />
+
+    <xacro:camera prefix="right" reflect="1" />
+    <xacro:camera prefix="left" reflect="-1" />
+
+  </xacro:macro>
+
+</robot>
