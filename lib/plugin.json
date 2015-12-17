@@ -1,5 +1,6 @@
 {
   "refName": "upcom-viz",
   "fullName": "UpDroid Visualizer",
-  "shortName": "Visualizer"
+  "shortName": "Visualizer",
+  "types": ["tab"]
 }

@@ -5,7 +5,8 @@ import 'dart:html';
 import 'dart:js' as js;
 
 // UpCom import for a Tab front-end (lib).
-import 'package:upcom-api/tab_frontend.dart';
+import 'package:upcom-api/web/mailbox/mailbox.dart';
+import 'package:upcom-api/web/tab/tab_controller.dart';
 
 class UpDroidViz extends TabController {
   static final List<String> names = ['upcom-viz', 'UpDroid Visualizer', 'Visualizer'];
@@ -23,7 +24,7 @@ class UpDroidViz extends TabController {
   DivElement _urdfDiv;
 
   UpDroidViz(List<ScriptElement> scripts) :
-  super(UpDroidViz.names, getMenuConfig(), 'tabs/upcom-viz/viz.css') {
+  super(UpDroidViz.names, true, true, getMenuConfig()) {
     _scripts = scripts;
 
   }
@@ -33,7 +34,7 @@ class UpDroidViz extends TabController {
     _urdfDiv = new DivElement()
       ..id = '$refName-$id-urdf-div'
       ..classes.add('$refName-urdf-div');
-    view.content.children.add(_urdfDiv);
+    content.children.add(_urdfDiv);
   }
 
   //\/\/ Mailbox Handlers /\/\//
@@ -83,7 +84,7 @@ class UpDroidViz extends TabController {
     });
   }
 
-  Element get elementToFocus => view.content.children[0];
+  Element get elementToFocus => content.children[0];
 
   Future<bool> preClose() {
     Completer c = new Completer();

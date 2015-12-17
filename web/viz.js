@@ -34,7 +34,7 @@ function setUpViewer(ip, canvasWidth, canvasHeight) {
     var urdfClient = new ROS3D.UrdfClient({
         ros : ros,
         tfClient : tfClient,
-        path : 'http://' + ip + ':12060/tabs/upcom-viz/',
+        path : 'http://' + ip + ':12060/plugins/upcom-viz/',
         rootObject : viewer.scene,
         loader : ROS3D.COLLADA_LOADER
     });

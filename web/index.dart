@@ -5,12 +5,12 @@ import 'viz.dart';
 void main() {
   ScriptElement depsJs = new ScriptElement()
     ..type = 'text/javascript'
-    ..src = 'tabs/upcom-viz/viz-deps.js';
+    ..src = 'plugins/upcom-viz/viz-deps.js';
   document.body.children.add(depsJs);
 
   ScriptElement vizJs = new ScriptElement()
     ..type = 'text/javascript'
-    ..src = 'tabs/upcom-viz/viz.js';
+    ..src = 'plugins/upcom-viz/viz.js';
   document.body.children.add(vizJs);
 
   FutureGroup jsGroup = new FutureGroup();
