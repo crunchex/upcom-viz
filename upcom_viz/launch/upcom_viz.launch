@@ -1,7 +1,7 @@
 <launch>
   <arg name="joints_gui" default="false" />
   <include file="$(find up1_description)/launch/description.launch">
-    <arg name="manipulator_module" value="mono_arm" />
+    <arg name="manipulator" value="mono" />
   </include>
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
